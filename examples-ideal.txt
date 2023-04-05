@@ -1,0 +1,168 @@
+Sample calculation 1:
+
+We want to perform the equivalent of the call to the npf (numpy_financial) 
+    library function fv with natural language.
+
+Python code:
+
+rate = 0.05/12
+nper = 10*12
+pmt = -100
+pv = -100
+npf.fv(rate, nper, pmt, pv)
+
+How might a user type this in my DSL?
+
+Example 1: What is the future value of of a $100 payment made monthly for 10 
+            years at a 5% annual interest rates?
+
+^ This phrase would be a nearly ideal case but there is too much complexity,
+    like tracking if the payment is monthly and the interest rate is annual.
+
+Example 2: Given rate = 0.05/12, nper = 10*12, pmt = -100, and pv = -100. 
+            What is the future value?
+
+^ This phrase is more realistic. I think that we could easily interpret each of 
+    the first sentence (Starts with given), by splitting it based on commas and
+    then adding each of the declarations (i.e. pv = -100) directly as they are
+    given in python. Then when there is a question (identified by the phrase 
+    "What is" and the ending '?' symbol), we can determine what function we are
+    calling given the information.
+
+Example 3: Given a rate of 0.05/12, 10*12 periods, $100 payments, and a present 
+            value of 100. What is the future value?
+
+^ This phrase is a good example of what how I think I could slowly expand upon
+    the first phrase and get closer to the more natural language structure of
+    Phrase 1.
+
+--------------------------------------------------------------------------------
+
+Sample calculation 2:
+
+We want to calculate the Present Value (FV) of an income stream
+
+Python code:
+
+rate = 0.05/12
+nper = 10*12
+pmt = -100
+npf.pv(rate, nper, pmt)
+
+How might a user type this in my DSL?
+
+Example 1: Given rate = 0.05/12, nper = 10*12, and pmt = -100. 
+            What is the present value?
+
+^ This example is very similar to my example 2 from sample calculation 1. The
+    only difference required for this would be function called, present value
+    instead of future value.
+
+Example 2: Given rate of 0.05/12, nper of 10*12, and pmt of -100. 
+            What is the PV?
+
+Example 3: Given rate of 0.05/12, nper of 10*12, and pmt of -100. 
+            What is the pv?
+
+^ These 2 examples are very similar to example 1 with minor changes: 
+    - The '=' symbol can be replaced for "of". To do this I would likely need to
+        make sure this always makes sense and does not allow phrases which do
+        not make sense.
+    - The function name "present value" can be replaced by "PV" or "pv". This 
+        seems more easy to do as it would just require basic pattern matching.
+--------------------------------------------------------------------------------
+
+Sample calculation 3:
+
+We want to determine the Internal Rate of Return (IRR) of a set of cash flows.
+
+Python code:
+
+cash_flows = [-250000, 100000, 150000, 200000, 250000, 300000]
+npf.irr(cash_flows)
+
+How might a user type this in my DSL?
+
+Example 1: Given cash_flows = [-250000, 100000, 150000, 200000, 250000, 300000].
+            What is the IRR?
+
+Example 2: Given cash_flows of [-250000, 100000, 150000, 200000, 250000, 300000].
+            What is the irr?
+
+Example 3: Given cash_flows of [-250000, 100000, 150000, 200000, 250000, 300000].
+            What is the internal rate of return?
+
+^ These 2 examples are very similar to example 1 with minor changes: 
+    - The '=' symbol can be replaced for "of". To do this I would likely need to
+        make sure this always makes sense and does not allow phrases which do
+        not make sense.
+    - The function name "IRR" can be replaced by "irr" or "internal rate of 
+        return". This seems more easy to do as it would just require basic
+        pattern matching.
+
+--------------------------------------------------------------------------------
+
+Sample calculation 4:
+
+We want to calculate the Net Present Value (NPV) of an investment.
+
+Python code:
+
+rate = 0.08
+cash_flows = [-100, 39, 59, 55, 20]
+np.npv(rate,cash_flows)
+
+How might a user type this in my DSL?
+
+Example 1: Given rate = 0.08 and cash_flows = [-100, 39, 59, 55, 20]. What is
+            the Net Present Value?
+
+^ This example is very similar to my prior ones, the format is input given 
+    values then calculate. However, I noticed there are no commas in this case
+    so I may need to find some other way to parse the first 'given' sentence.
+
+Example 2: Given a rate of 0.08 and cash_flows of [-100, 39, 59, 55, 20]. What 
+            is the NPV?
+
+^ This example is also similar to the more natural language expressions I would
+    like to get. However, I noticed that the phrasing slightly changes from 
+    "rate=0.08" to "a rate of 0.08" which I would need to make sure I account
+    for when parsing. Also "NPV" should be replaceable for "npv" or "Net Present 
+    Value".
+
+Example 3: Given a rate of 8% and cash_flows of [-100, 39, 59, 55, 20]. What 
+            is the NPV?
+
+Example 4: Given rate = 8% and cash_flows of [-100, 39, 59, 55, 20]. What 
+            is the NPV?
+
+^ These examples are unique as they introduces percentages, I would want to 
+    ensure that rates can be expressed as percentages rather than just decimals
+    as it is quicker for users to type and it is easier to read.
+
+Example 5: Given rate = 8% and cash_flows of [$-100, $39, $59, $55, $20]. What 
+            is the NPV?
+
+Example 6: Given rate = 8% and cash_flows of [-$100, $39, $59, $55, $20]. What 
+            is the NPV?
+
+^ These examples introduce the '$' symbol, which I am not certain I think is
+    crucial to account for. Or if I should allow users to place it either before
+    and after (OR BOTH!) a negative sign. Also I probably don't need to include
+    '+' symbols but it might be something to explore in explaining my design.
+
+--------------------------------------------------------------------------------
+
+                                    TEMPLATE
+
+--------------------------------------------------------------------------------
+
+Sample calculation #:
+
+We want to ...
+
+Python code:
+
+How might a user type this in my DSL?
+
+Example 1:
