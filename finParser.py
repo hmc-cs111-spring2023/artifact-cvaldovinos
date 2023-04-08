@@ -39,7 +39,11 @@ def parse(text):
         if func: functionName = func.groups()[0]
         else:
             func = re.match(".*([Pp]resent [Vv]alue|PV|pv)\?", question)
-            functionName = func.groups()[0]
+            if func: functionName = func.groups()[0]
+            else: 
+                # throw an error
+                print("Error: No valid function name found. Allowed function names include: NPV, FV, IRR, and PV.")
+                functionName = "Invalid Function Name"
         # Returns the function name
         # functionName = func.groups()[0]
         # print("Function name: ", func)

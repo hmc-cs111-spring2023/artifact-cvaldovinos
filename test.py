@@ -1,5 +1,14 @@
 import unittest
+
 from finParser import parse
+
+# You can run 
+# 
+#   python test.py
+# 
+# To verify that all the test cases pass.
+
+
 FV_TESTCASES = [
     "Given a rate of 0.05/12, 10*12 periods, $100 payments, and a present value of 100. What is the FV?",
     "Given a rate of 0.05/12, 10*12 periods, $100 payments, and a present value of 100. What is the fv?",
@@ -32,31 +41,31 @@ NPV_TESTCASES = [
 
 class TestParser(unittest.TestCase):
 
-    def test_future_value_0(self):
+    def test_fv_0(self):
         input, functionName = parse(FV_TESTCASES[0])
 
         self.assertEqual(input, ['a rate of 0.05/12', '10*12 periods', '$100 payments', 'a present value of 100'])
         self.assertEqual(functionName, "FV")
 
-    def test_future_value_1(self):
+    def test_fv_1(self):
         input, functionName = parse(FV_TESTCASES[1])
 
         self.assertEqual(input, ['a rate of 0.05/12', '10*12 periods', '$100 payments', 'a present value of 100'])
         self.assertEqual(functionName, "fv")
     
-    def test_future_value_2(self):
+    def test_fv_2(self):
         input, functionName = parse(FV_TESTCASES[2])
 
         self.assertEqual(input, ['a rate of 0.05/12', '10*12 periods', '$100 payments', 'a present value of 100'])
         self.assertEqual(functionName, "Future Value")
 
-    def test_future_value_3(self):
+    def test_fv_3(self):
         input, functionName = parse(FV_TESTCASES[3])
 
         self.assertEqual(input, ['rate = 0.05/12', 'nper = 10*12', 'pmt = -100', 'pv = -100'])
         self.assertEqual(functionName, "future value")
 
-    def test_future_value_4(self):
+    def test_fv_4(self):
         input, functionName = parse(FV_TESTCASES[4])
 
         self.assertEqual(input, ['a rate of 0.05/12', '10*12 periods', '$100 payments', 'a present value of 100'])
