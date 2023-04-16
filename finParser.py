@@ -3,47 +3,99 @@ import re
 def format_operations(string):
     """This function removes the 'Given', 'and', and spaces from the start of
         operations."""
+    
     # This statement works when there are 3 or more operations.
-
     return re.sub("(Given )?(^\s+)?(and )?", "", string)
 
 def format_operations1(string):
     """This function removes the 'Given', 'and', and spaces from the start of
         operations."""
+    
     # This statement works when there are 2 or less operations.
     return re.sub("(Given )?(^\s+)?(and )?", "", string)
 
-def inputFormatter(match, variable):
+def inputFormatter(match, variable):        
+    """This function formats the input into valid Python code."""
+
     operation = list(filter(lambda x: x != None, match.groups()))
+    if "%" in operation[0]:
+        match1 = re.match("(\d*).?(\d*)\%?", operation[0])
+        groups = list(match1.groups())
+        
+        while len(groups[0]) < 2:
+            groups[0] = "0" + groups[0]
+
+        while len(groups[1]) < 2:
+            groups[1] = groups[1] + "0"
+        
+        i = len(groups[0]) - 2
+        operation[0] = groups[0][0:i] + "." + groups[0][i:] + groups[1]
+    
     if (len(operation) == 2):
-        return variable + " = " + operation[0] + operation[1]
+        return variable + " = " + str(eval(operation[0] + operation[1]))
     else:
-        return variable + " = " + operation[0]
+        return variable + " = " + str(eval(operation[0]))
 
 def operationParser(string):
-    """This function parses the operations into valid Python code."""
+    """This function determines which input each operation corresponds to."""
 
-    matchesRateExpr1 = re.match("a rate of (\d*.?\d*\%?)(\/\d*|\*\d*)?", string)
+    matchesRateExpr1 = re.match("a?\s?rate of (\d*.?\d*\%?)(\/\d*|\*\d*)?", string)
     if matchesRateExpr1: return inputFormatter(matchesRateExpr1, "r")
 
-    matchesRateExpr2 = re.match("rate = (\d*.?\d*\%?)(\/\d*|\*\d*)?", string)
+    matchesRateExpr2 = re.match("a?\s?rate = (\d*.?\d*\%?)(\/\d*|\*\d*)?", string)
     if matchesRateExpr2: return inputFormatter(matchesRateExpr2, "r")
         
-    matchesRateExpr3 = re.match("r = (\d*.?\d*\%?)(\/\d*|\*\d*)?", string)
+    matchesRateExpr3 = re.match("a?\s?r = (\d*.?\d*\%?)(\/\d*|\*\d*)?", string)
     if matchesRateExpr3: return inputFormatter(matchesRateExpr3, "r")
 
-    matchesNPERExpr1 = re.match("(\d*)(\*\d*)? periods", string)
-    if matchesNPERExpr1: return inputFormatter(matchesNPERExpr1, "nper")
+    matchesNperExpr1 = re.match("(\d*)(\*\d*)? periods", string)
+    if matchesNperExpr1: return inputFormatter(matchesNperExpr1, "nper")
 
-    matchesNPERExpr2 = re.match("nper = (\d*)(\*\d*)?", string)
-    if matchesNPERExpr2: return inputFormatter(matchesNPERExpr2, "nper")
+    matchesNperExpr2 = re.match("nper = (\d*)(\*\d*)?", string)
+    if matchesNperExpr2: return inputFormatter(matchesNperExpr2, "nper")
 
-    matchesNPERExpr3 = re.match("nper of (\d*)(\*\d*)?", string)
-    if matchesNPERExpr3: return inputFormatter(matchesNPERExpr3, "nper")
+    matchesNperExpr3 = re.match("nper of (\d*)(\*\d*)?", string)
+    if matchesNperExpr3: return inputFormatter(matchesNperExpr3, "nper")
+
+    matchesPmtExpr1 = re.match("\$(-?\d*\.?\d+) payments", string)
+    if matchesPmtExpr1: return "pmt = -" + matchesPmtExpr1.group(1)
+
+    matchesPmtExpr2 = re.match("pmt = (-?\d*\.?\d+)", string)
+    if matchesPmtExpr2: return inputFormatter(matchesPmtExpr2, "pmt")
+
+    matchesPmtExpr3 = re.match("pmt of (-?\d*\.?\d+)", string)
+    if matchesPmtExpr3: return inputFormatter(matchesPmtExpr3, "pmt")
+
+    matchesPvExpr1 = re.match("a?\s?present value of (-?\d*\.?\d+)", string)
+    if matchesPvExpr1: return inputFormatter(matchesPvExpr1, "pv")
+
+    matchesPvExpr2 = re.match("a?\s?pv = (-?\d*\.?\d+)", string)
+    if matchesPvExpr2: return inputFormatter(matchesPvExpr2, "pv")
+
+    matchesPvExpr3 = re.match("a?\s?pv of (-?\d*\.?\d+)", string)
+    if matchesPvExpr3: return inputFormatter(matchesPvExpr3, "pv")
+
+    matchesFvExpr1 = re.match("a?\s?future value of (-?\d*\.?\d+)", string)
+    if matchesFvExpr1: return inputFormatter(matchesFvExpr1, "fv")
+
+    matchesFvExpr2 = re.match("a?\s?fv = (-?\d*\.?\d+)", string)
+    if matchesFvExpr2: return inputFormatter(matchesFvExpr2, "fv")
+
+    matchesFvExpr3 = re.match("a?\s?fv of (-?\d*\.?\d+)", string)
+    if matchesFvExpr3: return inputFormatter(matchesFvExpr3, "fv")
+
+    matchesCFExpr1 = re.match("cash flows of (\[-?\d*\.?\d+(?:,\s*-?\d*\.?\d+)*\])", string.replace("$", ""))
+    if matchesCFExpr1: return "cash_flows = " + matchesCFExpr1.group(1).replace("$", "")
+
+    matchesCFExpr2 = re.match("cash flows = (\[-?\d*\.?\d+(?:,\s*-?\d*\.?\d+)*\])", string.replace("$", ""))
+    if matchesCFExpr2: return "cash_flows = " + matchesCFExpr2.group(1).replace("$", "")
+
 
     # Currently only works for r and nper. Once all operations have been included (possibly including optional ones), 
     #   throw an error describing the invalid operation.
-    else: return string
+    else: 
+        print("Error: Invalid operation name found. Allowed operations include rate, nper, pmt, pv, fv, and cash flows.")
+        return "ERROR: Invalid operation."
 
 def functionParser(string):
     """This function parses the function name into valid Python code."""
@@ -85,4 +137,3 @@ def parse(text):
         functionName = functionParser(question)
 
     return inputs, functionName
-

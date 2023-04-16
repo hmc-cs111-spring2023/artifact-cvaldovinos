@@ -36,3 +36,5 @@ print(npf.fv(intRates, 10*12, -100, -100))
 # print(npf.FV(r = 7%, years = 10, pmt = -100, pv = -100))
 
 print(npf.npv(0.281,[-100, 39, 59, 55, 20]))
+
+print(npf.npv(0.281,[-100, 39, 59, 55, 20]))
