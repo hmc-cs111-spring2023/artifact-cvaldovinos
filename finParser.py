@@ -14,10 +14,10 @@ def format_operations1(string):
     # This statement works when there are 2 or less operations.
     return re.sub("(Given )?(^\s+)?(and )?", "", string)
 
-def inputFormatter(match, variable):        
-    """This function formats the input into valid Python code."""
+def inputFormatter(inputs, variable):        
+    """This function formats the inputs and evaluates any operations within them."""
 
-    operation = list(filter(lambda x: x != None, match.groups()))
+    operation = list(filter(lambda x: x != None, inputs.groups()))
     if "%" in operation[0]:
         match1 = re.match("(\d*).?(\d*)\%?", operation[0])
         groups = list(match1.groups())
@@ -37,7 +37,7 @@ def inputFormatter(match, variable):
         return variable + " = " + str(eval(operation[0]))
 
 def operationParser(string):
-    """This function determines which input each operation corresponds to."""
+    """This function parses the input string and returns the inputs and the function name."""
 
     matchesRateExpr1 = re.match("a?\s?rate of (\d*.?\d*\%?)(\/\d*|\*\d*)?", string)
     if matchesRateExpr1: return inputFormatter(matchesRateExpr1, "r")
@@ -91,15 +91,13 @@ def operationParser(string):
     if matchesCFExpr2: return "cash_flows = " + matchesCFExpr2.group(1).replace("$", "")
 
 
-    # Currently only works for r and nper. Once all operations have been included (possibly including optional ones), 
-    #   throw an error describing the invalid operation.
+    # TODO: Throw an error describing the invalid operation.
     else: 
         print("Error: Invalid operation name found. Allowed operations include rate, nper, pmt, pv, fv, and cash flows.")
         return "ERROR: Invalid operation."
 
 def functionParser(string):
-    """This function parses the function name into valid Python code."""
-    # This statement returns the function name
+    """This function parses the second sentence and returns the function name."""
 
     matchesNPV = re.match(".*([Nn]et [Pp]resent [Vv]alue|NPV|npv)\?", string)
     if matchesNPV: return "NPV"
@@ -119,7 +117,7 @@ def functionParser(string):
         return "Invalid Function Name"
 
 def parse(text):
-    """This parses the text into """
+    """This function parses the input text and returns the inputs and the function name."""
     # This splits the text into the two sentences: given and question
     given, question = re.split("\. ", text, maxsplit=1)
 
