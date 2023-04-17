@@ -57,14 +57,17 @@ def operationParser(string):
     matchesNperExpr3 = re.match("nper of (\d*)(\*\d*)?", string)
     if matchesNperExpr3: return inputFormatter(matchesNperExpr3, "nper")
 
-    matchesPmtExpr1 = re.match("\$(-?\d*\.?\d+) payments", string)
-    if matchesPmtExpr1: return "pmt = -" + matchesPmtExpr1.group(1)
+    matchesPmtExpr1 = re.match("\$(-\d*\.?\d+) payments", string)
+    if matchesPmtExpr1: return "pmt = " + matchesPmtExpr1.group(1)
 
-    matchesPmtExpr2 = re.match("pmt = (-?\d*\.?\d+)", string)
-    if matchesPmtExpr2: return inputFormatter(matchesPmtExpr2, "pmt")
+    matchesPmtExpr2 = re.match("\$(\d*\.?\d+) payments", string)
+    if matchesPmtExpr2: return "pmt = -" + matchesPmtExpr2.group(1)
 
-    matchesPmtExpr3 = re.match("pmt of (-?\d*\.?\d+)", string)
+    matchesPmtExpr3 = re.match("pmt = (-?\d*\.?\d+)", string)
     if matchesPmtExpr3: return inputFormatter(matchesPmtExpr3, "pmt")
+
+    matchesPmtExpr4 = re.match("pmt of (-?\d*\.?\d+)", string)
+    if matchesPmtExpr4: return inputFormatter(matchesPmtExpr4, "pmt")
 
     matchesPvExpr1 = re.match("a?\s?present value of (-?\d*\.?\d+)", string)
     if matchesPvExpr1: return inputFormatter(matchesPvExpr1, "pv")
