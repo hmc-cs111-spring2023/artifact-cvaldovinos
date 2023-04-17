@@ -4,7 +4,7 @@ from src.finParser import parse
 
 # You can run 
 # 
-#   python testParser.py
+#   python test.py
 # 
 # To verify that all the test cases pass.
 
