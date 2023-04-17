@@ -23,7 +23,7 @@ from evaluator import evaluate
 # TODO: Throw errors for when the given statement is invalid.
 def main():
     while True:
-        text = input('FinanceEvaluator > ')
+        text = input('FinanceCalculator > ')
 
         if text == "exit" or text == "quit":
             print("Exiting FinanceCalculator...")

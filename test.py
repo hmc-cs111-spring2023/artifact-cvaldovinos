@@ -1,6 +1,6 @@
 import unittest
 
-from src.finParser import parse
+from finParser import parse
 
 # You can run 
 # 
