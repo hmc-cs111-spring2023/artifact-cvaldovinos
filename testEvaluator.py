@@ -48,7 +48,7 @@ class TestParser(unittest.TestCase):
     def test_fv_0(self):
         inputs, functionName = parse(FV_TESTCASES[0])
         expectedValue = evaluate(functionName, inputs)
-        
+
         self.assertEqual(expectedValue, fv(0.004166666666666667, 120, -100, 100))
 
     def test_fv_1(self):
