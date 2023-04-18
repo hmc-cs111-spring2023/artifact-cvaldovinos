@@ -1,4 +1,6 @@
 from finParser import parse
+import numpy_financial as npf;
+from evaluator import evaluate
 
 # You can run this file with
 # 
@@ -19,7 +21,6 @@ from finParser import parse
 # This will output the "inputs" and the "function name" which the parser returns from the input string.
 
 # TODO: Throw errors for when the given statement is invalid.
-
 def main():
     while True:
         text = input('FinanceCalculator > ')
@@ -29,8 +30,8 @@ def main():
             break
 
         inputs, functionName = parse(text)
-        print("Inputs:       ", inputs)
-        print("Function Name:", functionName)
+
+        print(evaluate(functionName, inputs))
 
 if __name__ == "__main__":
     main()
