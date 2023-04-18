@@ -4,7 +4,7 @@ from finParser import parse
 
 # You can run 
 # 
-#   python test.py
+#   python testParser.py
 # 
 # To verify that all the test cases pass.
 
@@ -42,129 +42,129 @@ NPV_TESTCASES = [
 class TestParser(unittest.TestCase):
 
     def test_fv_0(self):
-        input, functionName = parse(FV_TESTCASES[0])
+        inputs, functionName = parse(FV_TESTCASES[0])
 
-        self.assertEqual(input, ['r = 0.004166666666666667', 'nper = 120', 'pmt = -100', 'pv = 100'])
+        self.assertEqual(inputs, ['r = 0.004166666666666667', 'nper = 120', 'pmt = -100', 'pv = 100'])
         self.assertEqual(functionName, "FV")
 
     def test_fv_1(self):
-        input, functionName = parse(FV_TESTCASES[1])
+        inputs, functionName = parse(FV_TESTCASES[1])
 
-        self.assertEqual(input, ['r = 0.004166666666666667', 'nper = 120', 'pmt = -100', 'pv = 100'])
+        self.assertEqual(inputs, ['r = 0.004166666666666667', 'nper = 120', 'pmt = -100', 'pv = 100'])
         self.assertEqual(functionName, "FV")
     
     def test_fv_2(self):
-        input, functionName = parse(FV_TESTCASES[2])
+        inputs, functionName = parse(FV_TESTCASES[2])
 
-        self.assertEqual(input, ['r = 0.004166666666666667', 'nper = 120', 'pmt = -100', 'pv = 100'])
+        self.assertEqual(inputs, ['r = 0.004166666666666667', 'nper = 120', 'pmt = -100', 'pv = 100'])
         self.assertEqual(functionName, "FV")
 
     def test_fv_3(self):
-        input, functionName = parse(FV_TESTCASES[3])
+        inputs, functionName = parse(FV_TESTCASES[3])
 
-        self.assertEqual(input, ['r = 0.004166666666666667', 'nper = 120', 'pmt = -100', 'pv = -0.25'])
+        self.assertEqual(inputs, ['r = 0.004166666666666667', 'nper = 120', 'pmt = -100', 'pv = -0.25'])
         self.assertEqual(functionName, "FV")
 
     def test_fv_4(self):
-        input, functionName = parse(FV_TESTCASES[4])
+        inputs, functionName = parse(FV_TESTCASES[4])
 
-        self.assertEqual(input, ['r = 0.004166666666666667', 'nper = 120', 'pmt = -100', 'pv = 100'])
+        self.assertEqual(inputs, ['r = 0.004166666666666667', 'nper = 120', 'pmt = -100', 'pv = 100'])
         self.assertEqual(functionName, "FV")
         
     def test_pv_0(self):
-        input, functionName = parse(PV_TESTCASES[0])
+        inputs, functionName = parse(PV_TESTCASES[0])
 
-        self.assertEqual(input, ['r = 0.004166666666666667', 'nper = 120', 'pmt = -100'])
+        self.assertEqual(inputs, ['r = 0.004166666666666667', 'nper = 120', 'pmt = -100'])
         self.assertEqual(functionName, "PV")
 
     def test_pv_1(self):
-        input, functionName = parse(PV_TESTCASES[1])
+        inputs, functionName = parse(PV_TESTCASES[1])
 
-        self.assertEqual(input, ['r = 0.004166666666666667', 'nper = 120', 'pmt = -100'])
+        self.assertEqual(inputs, ['r = 0.004166666666666667', 'nper = 120', 'pmt = -100'])
         self.assertEqual(functionName, "PV")
 
     def test_pv_2(self):
-        input, functionName = parse(PV_TESTCASES[2])
+        inputs, functionName = parse(PV_TESTCASES[2])
 
-        self.assertEqual(input, ['r = 0.004166666666666667', 'nper = 120', 'pmt = -100'])
+        self.assertEqual(inputs, ['r = 0.004166666666666667', 'nper = 120', 'pmt = -100'])
         self.assertEqual(functionName, "PV")
 
     def test_pv_3(self):
-        input, functionName = parse(PV_TESTCASES[3])
+        inputs, functionName = parse(PV_TESTCASES[3])
 
-        self.assertEqual(input, ['r = 0.004166666666666667', 'nper = 120', 'pmt = -100'])
+        self.assertEqual(inputs, ['r = 0.004166666666666667', 'nper = 120', 'pmt = -100'])
         self.assertEqual(functionName, "PV")
 
     def test_irr_0(self):
-        input, functionName = parse(IRR_TESTCASES[0])
+        inputs, functionName = parse(IRR_TESTCASES[0])
 
-        self.assertEqual(input, ['cash_flows = [-250000, 100000, 150000, 200000, 250000, 300000]'])
+        self.assertEqual(inputs, ['cash_flows = [-250000, 100000, 150000, 200000, 250000, 300000]'])
         self.assertEqual(functionName, "IRR")
 
     def test_irr_1(self):
-        input, functionName = parse(IRR_TESTCASES[1])
+        inputs, functionName = parse(IRR_TESTCASES[1])
 
-        self.assertEqual(input, ['cash_flows = [-250000, 100000, 150000, 200000, 250000, 300000]'])
+        self.assertEqual(inputs, ['cash_flows = [-250000, 100000, 150000, 200000, 250000, 300000]'])
         self.assertEqual(functionName, "IRR")
 
     def test_irr_2(self):
-        input, functionName = parse(IRR_TESTCASES[2])
+        inputs, functionName = parse(IRR_TESTCASES[2])
 
-        self.assertEqual(input, ['cash_flows = [-250000, 100000, 150000, 200000, 250000, 300000]'])
+        self.assertEqual(inputs, ['cash_flows = [-250000, 100000, 150000, 200000, 250000, 300000]'])
         self.assertEqual(functionName, "IRR")
 
     def test_irr_3(self):
-        input, functionName = parse(IRR_TESTCASES[3])
+        inputs, functionName = parse(IRR_TESTCASES[3])
 
-        self.assertEqual(input, ['cash_flows = [-250000, 100000, 150000, 200000, 250000, 300000]'])
+        self.assertEqual(inputs, ['cash_flows = [-250000, 100000, 150000, 200000, 250000, 300000]'])
         self.assertEqual(functionName, "IRR")
 
     def test_npv_0(self):
-        input, functionName = parse(NPV_TESTCASES[0])
+        inputs, functionName = parse(NPV_TESTCASES[0])
 
-        self.assertEqual(input, ['r = 0.08', 'cash_flows = [-100, 39, 59, 55, 20]'])
+        self.assertEqual(inputs, ['r = 0.08', 'cash_flows = [-100, 39, 59, 55, 20]'])
         self.assertEqual(functionName, "NPV")
 
     def test_npv_1(self):
-        input, functionName = parse(NPV_TESTCASES[1])
+        inputs, functionName = parse(NPV_TESTCASES[1])
 
-        self.assertEqual(input, ['r = 0.08', 'cash_flows = [-100, 39, 59, 55, 20]'])
+        self.assertEqual(inputs, ['r = 0.08', 'cash_flows = [-100, 39, 59, 55, 20]'])
         self.assertEqual(functionName, "NPV")
 
     def test_npv_2(self):
-        input, functionName = parse(NPV_TESTCASES[2])
+        inputs, functionName = parse(NPV_TESTCASES[2])
 
-        self.assertEqual(input, ['r = 0.0821', 'cash_flows = [-100, 39, 59, 55, 20]'])
+        self.assertEqual(inputs, ['r = 0.0821', 'cash_flows = [-100, 39, 59, 55, 20]'])
         self.assertEqual(functionName, "NPV")
 
     def test_npv_3(self):
-        input, functionName = parse(NPV_TESTCASES[3])
+        inputs, functionName = parse(NPV_TESTCASES[3])
 
-        self.assertEqual(input, ['r = 0.08', 'cash_flows = [-100, 39, 59, 55, 20]'])
+        self.assertEqual(inputs, ['r = 0.08', 'cash_flows = [-100, 39, 59, 55, 20]'])
         self.assertEqual(functionName, "NPV")
 
     def test_npv_4(self):
-        input, functionName = parse(NPV_TESTCASES[4])
+        inputs, functionName = parse(NPV_TESTCASES[4])
 
-        self.assertEqual(input, ['r = 1.28', 'cash_flows = [-100, 39, 59, 55, 20]'])
+        self.assertEqual(inputs, ['r = 1.28', 'cash_flows = [-100, 39, 59, 55, 20]'])
         self.assertEqual(functionName, "NPV")
 
     def test_npv_5(self):
-        input, functionName = parse(NPV_TESTCASES[5])
+        inputs, functionName = parse(NPV_TESTCASES[5])
 
-        self.assertEqual(input, ['r = 0.08', 'cash_flows = [-100, 39, 59, 55, 20]'])
+        self.assertEqual(inputs, ['r = 0.08', 'cash_flows = [-100, 39, 59, 55, 20]'])
         self.assertEqual(functionName, "NPV")
 
     def test_npv_6(self):
-        input, functionName = parse(NPV_TESTCASES[6])
+        inputs, functionName = parse(NPV_TESTCASES[6])
 
-        self.assertEqual(input, ['r = 0.08', 'cash_flows = [-100, 39, 59, 55, 20]'])
+        self.assertEqual(inputs, ['r = 0.08', 'cash_flows = [-100, 39, 59, 55, 20]'])
         self.assertEqual(functionName, "NPV")
     
     def test_npv_7(self):
-        input, functionName = parse(NPV_TESTCASES[7])
+        inputs, functionName = parse(NPV_TESTCASES[7])
 
-        self.assertEqual(input, ['r = 0.18', 'cash_flows = [-100, 39, 59, 55, 20.25]'])
+        self.assertEqual(inputs, ['r = 0.18', 'cash_flows = [-100, 39, 59, 55, 20.25]'])
         self.assertEqual(functionName, "NPV")
 
 if __name__ == "__main__":
