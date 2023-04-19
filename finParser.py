@@ -35,6 +35,33 @@ def inputFormatter(inputs, variable):
         return variable + " = " + str(eval(operation[0] + operation[1]))
     else:
         return variable + " = " + str(eval(operation[0]))
+    
+def argumentParser(argument, string):
+    """This function ensures that when one argument is provided that it is provided in a valid format."""
+    if argument == "r":
+        matchesRateExpr1 = re.match("a?\s?rate of (\d*.?\d*\%?)(\/\d*|\*\d*)?", string)
+        if matchesRateExpr1: return inputFormatter(matchesRateExpr1, "r")
+        
+        matchesRateExpr2 = re.match("a?\s?rate = (\d*.?\d*\%?)(\/\d*|\*\d*)?", string)
+        if matchesRateExpr2: return inputFormatter(matchesRateExpr2, "r")
+            
+        matchesRateExpr3 = re.match("a?\s?r = (\d*.?\d*\%?)(\/\d*|\*\d*)?", string)
+        if matchesRateExpr3: return inputFormatter(matchesRateExpr3, "r")
+
+        matchesRateExpr4 = re.match("(\d*.?\d*\%?)(\/\d*|\*\d*)?", string)
+        if matchesRateExpr4: return inputFormatter(matchesRateExpr4, "r")
+
+    if argument == "cash_flows":
+        matchesCFExpr1 = re.match("cash flows of (\[\s?-?\d*\.?\d+(?:,\s?-?\d*\.?\d+)*\s?\])", string.replace("$", ""))
+        if matchesCFExpr1: return "cash_flows = " + matchesCFExpr1.group(1).replace("$", "")
+
+        matchesCFExpr2 = re.match("cash flows = (\[\s?-?\d*\.?\d+(?:,\s?-?\d*\.?\d+)*\s?\])", string.replace("$", ""))
+        if matchesCFExpr2: return "cash_flows = " + matchesCFExpr2.group(1).replace("$", "")
+
+        matchesCFExpr3 = re.match("(\[\s?-?\d*\.?\d+(?:,\s?-?\d*\.?\d+)*\s?\])", string.replace("$", ""))
+        if matchesCFExpr3: return "cash_flows = " + matchesCFExpr3.group(1).replace("$", "")
+
+    # TODO: Add cases for all other args: pv, fv, nper, pmt
 
 def operationParser(string):
     """This function parses the input string and returns the inputs and the function name."""
@@ -87,10 +114,10 @@ def operationParser(string):
     matchesFvExpr3 = re.match("a?\s?fv of (-?\d*\.?\d+)", string)
     if matchesFvExpr3: return inputFormatter(matchesFvExpr3, "fv")
 
-    matchesCFExpr1 = re.match("cash flows of (\[-?\d*\.?\d+(?:,\s*-?\d*\.?\d+)*\])", string.replace("$", ""))
+    matchesCFExpr1 = re.match("cash flows of (\[\s*-?\d*\.?\d+(?:,\s*-?\d*\.?\d+)*\s*\])", string.replace("$", ""))
     if matchesCFExpr1: return "cash_flows = " + matchesCFExpr1.group(1).replace("$", "")
 
-    matchesCFExpr2 = re.match("cash flows = (\[-?\d*\.?\d+(?:,\s*-?\d*\.?\d+)*\])", string.replace("$", ""))
+    matchesCFExpr2 = re.match("cash flows = (\[\s*-?\d*\.?\d+(?:,\s*-?\d*\.?\d+)*\s*\])", string.replace("$", ""))
     if matchesCFExpr2: return "cash_flows = " + matchesCFExpr2.group(1).replace("$", "")
 
 
