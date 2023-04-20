@@ -5,6 +5,7 @@ from finParser import argumentParser
 
 def evaluate(function, inputs):
     R, CF, PV, FV, PMT, NPER = None, [], None, None, None, None
+    tooManyArgs = False
 
     # TODO: Consider extracting to something in parser, not sure how possible due to constants above.
     for inp in inputs:
@@ -48,7 +49,7 @@ def evaluate(function, inputs):
 
         else:
             print("Invalid argument " + inp)
-            print("\n The only valid arguments are: \n \n Rate - defines the rate and can be provided as: \n r = 0.07 or r = 7% or a rate of 2%, etc. \n Cash flows - defines the cash flows(TODO: these descirptions can likely be similar to those of google sheets/excel)) and can be provided as:")
+            print("\n The only valid arguments are: \n \n Rate - defines the rate and can be provided as: \n r = 0.07 or r = 7% or a rate of 2%, etc. \n Cash flows - defines the cash flows(TODO: these descriptions can likely be similar to those of google sheets/excel)) and can be provided as:")
 
 
     if function == "NPV":
@@ -59,7 +60,6 @@ def evaluate(function, inputs):
             match = re.match("r = (-?\d*.?\d*)", rateExpr)
             R = float(match.groups()[0])
 
-        # TODO: DeprecationWarning: elementwise comparison failed; this will raise an error in the future. while(CF == []):
         while(len(CF) == 0):
             print("You did not provide a valid set of cash flows.") # Add something about what a valid input looks like here
             CF_INPUT = input("Please input the cash flows: ")
@@ -67,12 +67,24 @@ def evaluate(function, inputs):
             match = re.match("cash_flows = (\[\s?-?\d*\.?\d+(?:,\s*-?\d*\.?\d+)*\s?\])", cfExpr)
             CF = np.fromstring(match.groups()[0].strip(']['), dtype=float, sep=',')
 
-        # TODO: Check that all other values are null, either throw an error if so otherwise just print that it's unnecessary
-        else:
-            return npf.npv(R, CF)
+        if FV != None:
+            tooManyArgs = True
+            print("You provided a future value but NPV does not use future value so that argument was ignored.")
+        if PV != None:
+            tooManyArgs = True
+            print("You provided a present value but NPV does not use present value so that argument was ignored.")
+        if PMT != None:
+            tooManyArgs = True
+            print("You provided a payment value but NPV does not use payment value so that argument was ignored.")
+        if NPER != None:
+            tooManyArgs = True
+            print("You provided a number of periods but NPV does not use number of periods so that argument was ignored.")
+        if tooManyArgs:
+            print("NPV only uses 2 arguments: rate and cash flows.\n\n")
+
+        return npf.npv(R, CF)
 
     elif function == "IRR":
-         # TODO: DeprecationWarning: elementwise comparison failed; this will raise an error in the future. while(CF == []):
         while(len(CF) == 0):
             print("You did not provide a valid set of cash flows.") # Add something about what a valid input looks like here
             CF_INPUT = input("Please input the cash flows: ")
@@ -80,7 +92,24 @@ def evaluate(function, inputs):
             match = re.match("cash_flows = (\[\s?-?\d*\.?\d+(?:,\s*-?\d*\.?\d+)*\s?\])", cfExpr)
             CF = np.fromstring(match.groups()[0].strip(']['), dtype=float, sep=',')
 
-        # TODO: Check that all other values are null, either throw an error if so otherwise just print that it's unnecessary
+        if FV != None:
+            tooManyArgs = True
+            print("You provided a future value but IRR does not use future value so that argument was ignored.")
+        if PV != None:
+            tooManyArgs = True
+            print("You provided a present value but IRR does not use present value so that argument was ignored.")
+        if PMT != None:
+            tooManyArgs = True
+            print("You provided a payment value but IRR does not use payment value so that argument was ignored.")
+        if NPER != None:
+            tooManyArgs = True
+            print("You provided a number of periods but IRR does not use number of periods so that argument was ignored.")
+        if R != None:
+            tooManyArgs = True
+            print("You provided a rate but IRR does not use rate so that argument was ignored.")
+        if tooManyArgs:
+            print("IRR only uses 1 argument: cash flows.\n\n")
+
         return npf.irr(CF)
         
     elif function == "FV":
@@ -105,11 +134,17 @@ def evaluate(function, inputs):
             match = re.match("pmt = (-?\d*.?\d*)", pmtExpr)
             PMT = float(match.groups()[0])
 
+        if FV != None:
+            tooManyArgs = True
+            print("You provided a future value but FV does not use future value so that argument was ignored.")
+        if len(CF) != 0:
+            tooManyArgs = True
+            print("You provided cash flows but FV does not use cash flows so that argument was ignored.")
+        if tooManyArgs:
+            print("FV only needs 3 arguments: rate, number of periods, and payment value. OPTIONALLY you can add a present value \n\n")
 
-        # TODO: Check that all other values are null (caution w/PV), either throw an error if so otherwise just print that it's unnecessary
         if PV == None:
             return npf.fv(R, NPER, PMT)
-        
         else:
             return npf.fv(R, NPER, PMT, PV)
     
@@ -135,8 +170,15 @@ def evaluate(function, inputs):
             match = re.match("pmt = (-?\d*.?\d*)", pmtExpr)
             PMT = float(match.groups()[0])
 
+        if PV != None:
+            tooManyArgs = True
+            print("You provided a present value but PV does not use present value so that argument was ignored.")
+        if len(CF) != 0:
+            tooManyArgs = True
+            print("You provided cash flows but PV does not use cash flows so that argument was ignored.")
+        if tooManyArgs:
+            print("PV only needs 3 arguments: rate, number of periods, and payment value. OPTIONALLY you can add a future value \n\n")
 
-        # TODO: Check that all other values are null (caution w/FV), either throw an error if so otherwise just print that it's unnecessary
         if FV == None:
             return npf.pv(R, NPER, PMT)
         else:
@@ -145,6 +187,3 @@ def evaluate(function, inputs):
     else:
         # TODO: Give a better error message
         return "ERROR"
-    
-    # Example that currently works:
-    # Given cash flows = [-250000, 100000, 150000, 200000, 250000, 300000]. What is the IRR?
