@@ -33,7 +33,7 @@ def evaluate(function, inputs):
             if FV == None:
                 FV = float(match4.groups()[0])
             else:
-                print("YOU ALREADY ASSIGNED PRESENT VALUE, cannot assign two present values, please provide one.")
+                print("YOU ALREADY ASSIGNED FUTURE VALUE, cannot assign two future values, please provide one.")
 
         elif (match5:= re.match("pmt = (-?\d*.?\d*)", inp)):
             if PMT == None:
@@ -48,9 +48,10 @@ def evaluate(function, inputs):
                 print("YOU ALREADY ASSIGNED NUMBER OF PERIODS, cannot assign two number of periods, please provide one.")
 
         else:
-            print("Invalid argument " + inp)
-            print("\n The only valid arguments are: \n \n Rate - defines the rate and can be provided as: \n r = 0.07 or r = 7% or a rate of 2%, etc. \n Cash flows - defines the cash flows(TODO: these descriptions can likely be similar to those of google sheets/excel)) and can be provided as:")
-
+            print("Invalid argument: " + inp + "\n The only valid arguments are: \n \n Rate - defines the rate and can be provided as: \n r = 0.07 or r = 7% or a rate of 2%, etc. \n Cash flows - defines the cash flows(TODO: these descriptions can likely be similar to those of google sheets/excel) and can be provided as:")
+            return
+            # TODO: Add some while loop here or figure out what happens to the user if they provide an invalid argument.
+            #       I think this case might not even be reachable but would need to ensure that parser previously catches all args.
 
     if function == "NPV":
         while(R == None):

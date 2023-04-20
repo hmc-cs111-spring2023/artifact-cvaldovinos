@@ -1,14 +1,15 @@
 import unittest
-
-import numpy as np
-from evaluator import evaluate
 from numpy_financial import npv, irr, fv, pv
-
+import pytest
+# import sys
+# from pathlib import Path
+# sys.path[0] = str(Path(sys.path[0]).parent)
+from evaluator import evaluate
 from finParser import parse
 
 # You can run 
 # 
-#   python testEvaluator.py
+#   python test_evaluator.py
 # 
 # To verify that all the test cases pass.
 
@@ -43,7 +44,11 @@ NPV_TESTCASES = [
     "Given rate = 18% and cash flows = [-100, 39, 59, 55, 20.25]. What is the net present value?"
     ]
 
-class TestParser(unittest.TestCase):
+class TestEvaluator(unittest.TestCase):
+
+    @pytest.fixture(autouse=True)
+    def capsys(self, capsys):
+        self.capsys = capsys
 
     def test_fv_0(self):
         inputs, functionName = parse(FV_TESTCASES[0])
@@ -171,7 +176,48 @@ class TestParser(unittest.TestCase):
 
         self.assertEqual(expectedValue, npv(0.18, [-100, 39, 59, 55, 20.25]))
 
+    def test_doubleRate_error(self):
+        evaluate("", ["r = 0.01", "r = 0.01"])
+        out,_ = self.capsys.readouterr()
+
+        self.assertEqual(out, "YOU ALREADY ASSIGNED A RATE, cannot assign two rates, please provide one.\n")
+
+    def test_doubleCF_error(self):
+        evaluate("", ["cash_flows = [-100, 200, 300]", "cash_flows = [-100, 200, 300]"])
+        out,_ = self.capsys.readouterr()
+
+        self.assertEqual(out, "YOU ALREADY ASSIGNED CASH FLOWS, cannot assign two cash flows, please provide one.\n")
+
+    def test_doublePV_error(self):
+        evaluate("", ["pv = 100", "pv = 100"])
+        out,_ = self.capsys.readouterr()
+
+        self.assertEqual(out, "YOU ALREADY ASSIGNED PRESENT VALUE, cannot assign two present values, please provide one.\n")
+
+    def test_doubleFV_error(self):
+        evaluate("", ["fv = 100", "fv = 100"])
+        out,_ = self.capsys.readouterr()
+
+        self.assertEqual(out, "YOU ALREADY ASSIGNED FUTURE VALUE, cannot assign two future values, please provide one.\n")
+
+    def test_doublePMT_error(self):
+        evaluate("", ["pmt = 100", "pmt = 100"])
+        out,_ = self.capsys.readouterr()
+
+        self.assertEqual(out, "YOU ALREADY ASSIGNED PAYMENT, cannot assign two payments, please provide one.\n")
+
+    def test_doubleNPER_error(self):
+        evaluate("", ["nper = 100", "nper = 100"])
+        out,_ = self.capsys.readouterr()
+
+        self.assertEqual(out, "YOU ALREADY ASSIGNED NUMBER OF PERIODS, cannot assign two number of periods, please provide one.\n")
+    
+    def test_invalidArg_error(self):
+        evaluate("", ["invalid = 100"])
+        out,_ = self.capsys.readouterr()
+
+        self.assertEqual(out, "Invalid argument: " + "invalid = 100" + "\n The only valid arguments are: \n \n Rate - defines the rate and can be provided as: \n r = 0.07 or r = 7% or a rate of 2%, etc. \n Cash flows - defines the cash flows(TODO: these descriptions can likely be similar to those of google sheets/excel) and can be provided as:\n")
+
+
 if __name__ == "__main__":
     unittest.main()
-
-

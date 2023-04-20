@@ -1,10 +1,13 @@
 import unittest
-
+import pytest
+# import sys
+# from pathlib import Path
+# sys.path[0] = str(Path(sys.path[0]).parent)
 from finParser import parse
 
 # You can run 
 # 
-#   python testParser.py
+#   python test_parser.py
 # 
 # To verify that all the test cases pass.
 
@@ -40,6 +43,10 @@ NPV_TESTCASES = [
     ]
 
 class TestParser(unittest.TestCase):
+
+    @pytest.fixture(autouse=True)
+    def capsys(self, capsys):
+        self.capsys = capsys
 
     def test_fv_0(self):
         inputs, functionName = parse(FV_TESTCASES[0])
@@ -167,7 +174,22 @@ class TestParser(unittest.TestCase):
         self.assertEqual(inputs, ['r = 0.18', 'cash_flows = [-100, 39, 59, 55, 20.25]'])
         self.assertEqual(functionName, "NPV")
 
+    def test_invalid_function(self):
+        _, functionName = parse("Given r = 0.08 and pv = 100. What is the ABC?")
+        out,_ = self.capsys.readouterr()
+
+        self.assertEqual(out, "Error: No valid function name found. Allowed function names include: NPV, FV, IRR, and PV.\n")
+        self.assertEqual(functionName, "Invalid Function Name") 
+
+    def test_invalid_inputs(self):
+        inputs, _ = parse("Given xqc = 123 and valid=456. What is the NPV?")
+        out,_ = self.capsys.readouterr()
+        INPUT_ERROR = "Error: Invalid input name found. Allowed inputs include rate, nper, pmt, pv, fv, and cash flows.\n"
+
+        self.assertEqual(out, INPUT_ERROR*2)
+        # TODO: I think this should do some break error instead of trying to call the evaluator with this
+        self.assertEqual(inputs, ["ERROR: Invalid input.", "ERROR: Invalid input."]) 
+
+
 if __name__ == "__main__":
     unittest.main()
-
-

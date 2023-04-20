@@ -1,13 +1,6 @@
 import re
 
-def format_operations(string):
-    """This function removes the 'Given', 'and', and spaces from the start of
-        operations."""
-    
-    # This statement works when there are 3 or more operations.
-    return re.sub("(Given )?(^\s+)?(and )?", "", string)
-
-def format_operations1(string):
+def extractOperations(string):
     """This function removes the 'Given', 'and', and spaces from the start of
         operations."""
     
@@ -37,6 +30,7 @@ def inputFormatter(inputs, variable):
         return variable + " = " + str(eval(operation[0]))
 
 def argumentParser(argument, string):
+    # TODO: Test all argument parser cases.
     """This function ensures that when one argument is provided that it is provided in a valid format."""
     if argument == "r":
         matchesRateExpr1 = re.match("a?\s?rate of (\d*.?\d*\%?)(\/\d*|\*\d*)?", string)
@@ -171,8 +165,8 @@ def operationParser(input):
 
     # TODO: Throw an error describing the invalid operation.
     else: 
-        print("Error: Invalid operation name found. Allowed operations include rate, nper, pmt, pv, fv, and cash flows.")
-        return "ERROR: Invalid operation."
+        print("Error: Invalid input name found. Allowed inputs include rate, nper, pmt, pv, fv, and cash flows.")
+        return "ERROR: Invalid input."
 
 def functionParser(string):
     """This function parses the second sentence and returns the function name."""
@@ -206,7 +200,7 @@ def parse(text):
             operations = re.split(" and", operations[0])
 
         # These statements return a list of operations with spaces removed
-        inputs = list(map(format_operations1,operations))
+        inputs = list(map(extractOperations,operations))
         inputs = [ operationParser(input) for input in inputs ]
     
     if question:
