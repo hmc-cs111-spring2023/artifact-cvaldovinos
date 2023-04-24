@@ -3,8 +3,6 @@ import re
 def extractOperations(string):
     """This function removes the 'Given', 'and', and spaces from the start of
         operations."""
-    
-    # This statement works when there are 2 or less operations.
     return re.sub("(Given )?(^\s+)?(and )?", "", string)
 
 def inputFormatter(inputs, variable):
@@ -31,7 +29,6 @@ def inputFormatter(inputs, variable):
 
 def argumentParser(argument, input):
     string = input.replace("$", "")
-    # TODO: Test all argument parser cases.
     """This function ensures that when one argument is provided that it is provided in a valid format."""
     if argument == "r":
         matchesRateExpr1 = re.match("a?\s?rate of (\d*.?\d*\%?)(\/\d*|\*\d*)?", string)
@@ -175,9 +172,7 @@ def operationParser(input):
     matchesCfExpr2 = re.match("cash flows = (\[\s*-?\d*\.?\d+(?:,\s*-?\d*\.?\d+)*\s*\])", string)
     if matchesCfExpr2: return "cash_flows = " + matchesCfExpr2.group(1)
 
-    # TODO: Throw an error describing the invalid operation.
     else: 
-        print("Error: Invalid input name found. Allowed inputs include rate, nper, pmt, pv, fv, and cash flows.")
         return "ERROR: Invalid input."
 
 def functionParser(string):
@@ -196,17 +191,16 @@ def functionParser(string):
     if matchesIRR: return "IRR"
 
     else:
-        # throw an error
-        print("Error: No valid function name found. Allowed function names include: NPV, FV, IRR, and PV.")
         return "Invalid Function Name"
 
 def parse(text):
     """This function parses the input text and returns the inputs and the function name."""
-    # This splits the text into the two sentences: given and question
-    given, question = re.split("\. ", text, maxsplit=1)
+    match = re.match("Given\s(.*)\. What is (.*)\?", text)
+    if match:
+        # This splits the text into the two sentences: given and question
+        given, question = re.split("\. ", text, maxsplit=1)
 
-    # If the given sentence is not empty, split it into operations
-    if given:
+        # This splits the given inputs into a list of operations
         operations = re.split("\,(?![^\[]*\])", given)
         if len(operations) == 1:
             operations = re.split(" and", operations[0])
@@ -215,7 +209,12 @@ def parse(text):
         inputs = list(map(extractOperations,operations))
         inputs = [ operationParser(input) for input in inputs ]
     
-    if question:
+        # This statement returns the function name
         functionName = functionParser(question)
 
-    return inputs, functionName
+        return inputs, functionName
+
+    else:
+        print("\nERROR: Invalid input.\n\nA valid input must be of the format:\n\tGiven <input>, <input>," + 
+                  " and <input>. What is <function name>?\n")
+        return None, None

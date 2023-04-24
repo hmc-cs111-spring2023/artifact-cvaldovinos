@@ -174,21 +174,25 @@ class TestParser(unittest.TestCase):
         self.assertEqual(inputs, ['r = 0.18', 'cash_flows = [-100, 39, 59, 55, 20.25]'])
         self.assertEqual(functionName, "NPV")
 
-    def test_invalid_function(self):
-        _, functionName = parse("Given r = 0.08 and pv = 100. What is the ABC?")
-        out,_ = self.capsys.readouterr()
+    def test_invalid_0(self):
+        inputs, _ = parse("Given a dog named Jerry and cash flows of [-100, 39, 59, 55, 20]. What is the NPV?")
 
-        self.assertEqual(out, "Error: No valid function name found. Allowed function names include: NPV, FV, IRR, and PV.\n")
-        self.assertEqual(functionName, "Invalid Function Name") 
+        self.assertIn("ERROR: Invalid input.", inputs)
 
-    def test_invalid_inputs(self):
-        inputs, _ = parse("Given xqc = 123 and valid=456. What is the NPV?")
-        out,_ = self.capsys.readouterr()
-        INPUT_ERROR = "Error: Invalid input name found. Allowed inputs include rate, nper, pmt, pv, fv, and cash flows.\n"
+    def test_invalid_1(self):
+        _, functionName = parse("Given a rate of 0.08 and cash flows of [-100, 39, 59, 55, 20]. What is the ABC?")
 
-        self.assertEqual(out, INPUT_ERROR*2)
-        # TODO: I think this should do some break error instead of trying to call the evaluator with this
-        self.assertEqual(inputs, ["ERROR: Invalid input.", "ERROR: Invalid input."]) 
+        self.assertEqual(functionName, "Invalid Function Name")
+
+    def test_invalid_input(self):
+        inputs, functionName = parse("This is an invalid phrase")
+
+        captured = self.capsys.readouterr()
+        self.assertIn(captured.out, "\nERROR: Invalid input.\n\nA valid input must be of the format:\n\tGiven <input>, <input>," + " and <input>. What is <function name>?\n\n")
+
+        self.assertEqual(inputs, None)
+        self.assertEqual(functionName, None)
+
 
 class TestArgumentParser(unittest.TestCase):
 

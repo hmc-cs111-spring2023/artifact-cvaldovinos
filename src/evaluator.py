@@ -59,14 +59,16 @@ def evaluate(function, inputs):
             R_INPUT = input("Please input the rate: ")
             rateExpr = argumentParser("r", R_INPUT)
             match = re.match("r = (-?\d*.?\d*)", rateExpr)
-            R = float(match.groups()[0])
+            if match: R = float(match.groups()[0])
+            else: continue
 
         while(len(CF) == 0):
             print("You did not provide a valid set of cash flows.") # Add something about what a valid input looks like here
             CF_INPUT = input("Please input the cash flows: ")
             cfExpr = argumentParser("cash_flows", CF_INPUT)
             match = re.match("cash_flows = (\[\s?-?\d*\.?\d+(?:,\s*-?\d*\.?\d+)*\s?\])", cfExpr)
-            CF = np.fromstring(match.groups()[0].strip(']['), dtype=float, sep=',')
+            if match: CF = np.fromstring(match.groups()[0].strip(']['), dtype=float, sep=',')
+            else: continue
 
         if FV != None:
             tooManyArgs = True
@@ -91,7 +93,8 @@ def evaluate(function, inputs):
             CF_INPUT = input("Please input the cash flows: ")
             cfExpr = argumentParser("cash_flows", CF_INPUT)
             match = re.match("cash_flows = (\[\s?-?\d*\.?\d+(?:,\s*-?\d*\.?\d+)*\s?\])", cfExpr)
-            CF = np.fromstring(match.groups()[0].strip(']['), dtype=float, sep=',')
+            if match: CF = np.fromstring(match.groups()[0].strip(']['), dtype=float, sep=',')
+            else: continue
 
         if FV != None:
             tooManyArgs = True
@@ -119,21 +122,24 @@ def evaluate(function, inputs):
             R_INPUT = input("Please input the rate: ")
             rateExpr = argumentParser("r", R_INPUT)
             match = re.match("r = (-?\d*.?\d*)", rateExpr)
-            R = float(match.groups()[0])
+            if match: R = float(match.groups()[0])
+            else: continue
 
         while(NPER == None):
             print("You did not provide a valid number of periods.") # TODO: Add something about what a valid input looks like here
             NPER_INPUT = input("Please input the number of periods: ")
             nperExpr = argumentParser("nper", NPER_INPUT)
             match = re.match("nper = (\d*.?\d*)", nperExpr)
-            NPER = float(match6.groups()[0])
+            if match: NPER = float(match6.groups()[0])
+            else: continue
 
         while(PMT == None):
             print("You did not provide a valid payment value.") # TODO: Add something about what a valid input looks like here
             PMT_INPUT = input("Please input the payment value: ") #TODO: Note that this will be negative, so a negative value corresponds to a ___ and a positive value corresponds to a ____ 
             pmtExpr = argumentParser("pmt", PMT_INPUT)
             match = re.match("pmt = (-?\d*.?\d*)", pmtExpr)
-            PMT = float(match.groups()[0])
+            if match: PMT = float(match.groups()[0])
+            else: continue
 
         if FV != None:
             tooManyArgs = True
@@ -155,21 +161,24 @@ def evaluate(function, inputs):
             R_INPUT = input("Please input the rate: ")
             rateExpr = argumentParser("r", R_INPUT)
             match = re.match("r = (-?\d*.?\d*)", rateExpr)
-            R = float(match.groups()[0])
+            if match: R = float(match.groups()[0])
+            else: continue
 
         while(NPER == None):
             print("You did not provide a valid number of periods.") # TODO: Add something about what a valid input looks like here
             NPER_INPUT = input("Please input the number of periods: ")
             nperExpr = argumentParser("nper", NPER_INPUT)
             match = re.match("nper = (\d*.?\d*)", nperExpr)
-            NPER = float(match6.groups()[0])
+            if match: NPER = float(match6.groups()[0])
+            else: continue
 
         while(PMT == None):
             print("You did not provide a valid payment value.") # TODO: Add something about what a valid input looks like here
             PMT_INPUT = input("Please input the payment value: ") #TODO: Note that this will be negative, so a negative value corresponds to a ___ and a positive value corresponds to a ____ 
             pmtExpr = argumentParser("pmt", PMT_INPUT)
             match = re.match("pmt = (-?\d*.?\d*)", pmtExpr)
-            PMT = float(match.groups()[0])
+            if match: PMT = float(match.groups()[0])
+            else: continue
 
         if PV != None:
             tooManyArgs = True
