@@ -29,7 +29,8 @@ def inputFormatter(inputs, variable):
     else:
         return variable + " = " + str(eval(operation[0]))
 
-def argumentParser(argument, string):
+def argumentParser(argument, input):
+    string = input.replace("$", "")
     # TODO: Test all argument parser cases.
     """This function ensures that when one argument is provided that it is provided in a valid format."""
     if argument == "r":
@@ -52,8 +53,11 @@ def argumentParser(argument, string):
         matchesCFExpr2 = re.match("cash flows = (\[\s?-?\d*\.?\d+(?:,\s?-?\d*\.?\d+)*\s?\])", string)
         if matchesCFExpr2: return "cash_flows = " + matchesCFExpr2.group(1)
 
-        matchesCFExpr3 = re.match("(\[\s?-?\d*\.?\d+(?:,\s?-?\d*\.?\d+)*\s?\])", string)
+        matchesCFExpr3 = re.match("cash_flows = (\[\s?-?\d*\.?\d+(?:,\s?-?\d*\.?\d+)*\s?\])", string)
         if matchesCFExpr3: return "cash_flows = " + matchesCFExpr3.group(1)
+
+        matchesCFExpr4 = re.match("(\[\s?-?\d*\.?\d+(?:,\s?-?\d*\.?\d+)*\s?\])", string)
+        if matchesCFExpr4: return "cash_flows = " + matchesCFExpr4.group(1)
 
     if argument == "nper":
         matchesNperExpr1 = re.match("(\d*)(\*\d*)? periods", string)
@@ -69,14 +73,20 @@ def argumentParser(argument, string):
         if matchesNperExpr4: return inputFormatter(matchesNperExpr4, "nper")
 
     if argument == "pmt":
-        matchesPmtExpr1 = re.match("\$(-\d*\.?\d+) payments", string)
+        matchesPmtExpr1 = re.match("\$-(\d*\.?\d+) payments", input)
         if matchesPmtExpr1: return "pmt = " + matchesPmtExpr1.group(1)
 
-        matchesPmtExpr2 = re.match("\$(\d*\.?\d+) payments", string)
+        matchesPmtExpr2 = re.match("\$(\d*\.?\d+) payments", input)
         if matchesPmtExpr2: return "pmt = -" + matchesPmtExpr2.group(1)
 
-        matchesPmtExpr3 = re.match("\$?(\d*\.?\d+)", string)
+        matchesPmtExpr3 = re.match("pmt = \$?(-?\d*\.?\d+)", input)
         if matchesPmtExpr3: return "pmt = " + matchesPmtExpr3.group(1)
+
+        matchesPmtExpr4 = re.match("pmt of \$?(-?\d*\.?\d+)", input)
+        if matchesPmtExpr4: return "pmt = " + matchesPmtExpr4.group(1)
+
+        matchesPmtExpr5 = re.match("\$?(-?\d*\.?\d+)", input)
+        if matchesPmtExpr5: return "pmt = " + matchesPmtExpr5.group(1)
 
     if argument == "pv":
         matchesPVExpr1 = re.match("a?\s?present value of (-?\d*\.?\d+)", string)
@@ -104,6 +114,8 @@ def argumentParser(argument, string):
         matchesFVExpr4 = re.match("(-?\d*\.?\d+)", string)
         if matchesFVExpr4: return "fv = " + matchesFVExpr4.group(1)
 
+    return "Invalid argument."
+
 def operationParser(input):
     """This function parses the input string and returns the inputs and the function name."""
     string = input.replace("$", "")
@@ -127,7 +139,7 @@ def operationParser(input):
     if matchesNperExpr3: return inputFormatter(matchesNperExpr3, "nper")
 
     # We do not replace the $ here because $100 payments is different than 100 payments (pmt = -100 vs. nper = 100).
-    matchesPmtExpr1 = re.match("\$(-\d*\.?\d+) payments", input)
+    matchesPmtExpr1 = re.match("\$-(\d*\.?\d+) payments", input)
     if matchesPmtExpr1: return "pmt = " + matchesPmtExpr1.group(1)
 
     matchesPmtExpr2 = re.match("\$(\d*\.?\d+) payments", input)

@@ -1,9 +1,9 @@
 import unittest
 import pytest
-# import sys
-# from pathlib import Path
-# sys.path[0] = str(Path(sys.path[0]).parent)
-from finParser import parse
+import sys
+from pathlib import Path
+sys.path[0] = str(Path(sys.path[0]).parent / "src")
+from finParser import parse, argumentParser
 
 # You can run 
 # 
@@ -189,6 +189,116 @@ class TestParser(unittest.TestCase):
         self.assertEqual(out, INPUT_ERROR*2)
         # TODO: I think this should do some break error instead of trying to call the evaluator with this
         self.assertEqual(inputs, ["ERROR: Invalid input.", "ERROR: Invalid input."]) 
+
+class TestArgumentParser(unittest.TestCase):
+
+    @pytest.fixture(autouse=True)
+    def capsys(self, capsys):
+        self.capsys = capsys
+
+    def test_rate_expr_1(self):
+        inputs = argumentParser("r", "a rate of 0.08")
+        self.assertEqual(inputs, "r = 0.08")
+
+    def test_rate_expr_2(self):
+        inputs = argumentParser("r", "rate = 0.05/12")
+        self.assertEqual(inputs, "r = 0.004166666666666667")
+
+    def test_rate_expr_3(self):
+        inputs = argumentParser("r", "r = 8%")
+        self.assertEqual(inputs, "r = 0.08")
+
+    def test_rate_expr_4(self):
+        inputs = argumentParser("r", "5%/12")
+        self.assertEqual(inputs, "r = 0.004166666666666667")
+
+    def test_cash_flows_expr_1(self):
+        inputs = argumentParser("cash_flows", "cash flows of [-$100, $39, $59, $55, $20]")
+        self.assertEqual(inputs, "cash_flows = [-100, 39, 59, 55, 20]")
+
+    def test_cash_flows_expr_2(self):
+        inputs = argumentParser("cash_flows", "cash flows = [-100, 39, 59, 55, 20]")
+        self.assertEqual(inputs, "cash_flows = [-100, 39, 59, 55, 20]")
+
+    def test_cash_flows_expr_3(self):
+        inputs = argumentParser("cash_flows", "cash flows = [$-100, $39, $59, $55, $20]")
+        self.assertEqual(inputs, "cash_flows = [-100, 39, 59, 55, 20]")
+
+    def test_cash_flows_expr_4(self):
+        inputs = argumentParser("cash_flows", "[-100, 39, 59, 55, 20]")
+        self.assertEqual(inputs, "cash_flows = [-100, 39, 59, 55, 20]")
+
+    def test_nper_expr_1(self):
+        inputs = argumentParser("nper", "10*12 periods")
+        self.assertEqual(inputs, "nper = 120")
+
+    def test_nper_expr_2(self):
+        inputs = argumentParser("nper", "nper = 5*12")
+        self.assertEqual(inputs, "nper = 60")
+
+    def test_nper_expr_3(self):
+        inputs = argumentParser("nper", "nper of 40")
+        self.assertEqual(inputs, "nper = 40")
+
+    def test_nper_expr_4(self):
+        inputs = argumentParser("nper", "10")
+        self.assertEqual(inputs, "nper = 10")
+
+    def test_pmt_expr_1(self):
+        inputs = argumentParser("pmt", "$-200 payments")
+        self.assertEqual(inputs, "pmt = 200")
+
+    def test_pmt_expr_2(self):
+        inputs = argumentParser("pmt", "$200 payments")
+        self.assertEqual(inputs, "pmt = -200")
+
+    def test_pmt_expr_3(self):
+        inputs = argumentParser("pmt", "pmt = $-200")
+        self.assertEqual(inputs, "pmt = -200")
+
+    def test_pmt_expr_4(self):
+        inputs = argumentParser("pmt", "pmt of $200")
+        self.assertEqual(inputs, "pmt = 200")
+
+    def test_pmt_expr_5(self):
+        inputs = argumentParser("pmt", "$-200")
+        self.assertEqual(inputs, "pmt = -200")
+
+    def test_pv_expr_1(self):
+        inputs = argumentParser("pv", "a present value of $-100")
+        self.assertEqual(inputs, "pv = -100")
+
+    def test_pv_expr_2(self):
+        inputs = argumentParser("pv", "a pv = $-100")
+        self.assertEqual(inputs, "pv = -100")
+
+    def test_pv_expr_3(self):
+        inputs = argumentParser("pv", "pv of $-100")
+        self.assertEqual(inputs, "pv = -100")
+
+    def test_pv_expr_4(self):
+        inputs = argumentParser("pv", "$-100")
+        self.assertEqual(inputs, "pv = -100")
+
+    def test_fv_expr_1(self):
+        inputs = argumentParser("fv", "a future value of $-100")
+        self.assertEqual(inputs, "fv = -100")
+
+    def test_fv_expr_2(self):
+        inputs = argumentParser("fv", "a fv = -100")
+        self.assertEqual(inputs, "fv = -100")
+
+    def test_fv_expr_3(self):
+        inputs = argumentParser("fv", "fv of -100")
+        self.assertEqual(inputs, "fv = -100")
+
+    def test_fv_expr_4(self):
+        inputs = argumentParser("fv", "$-100")
+        self.assertEqual(inputs, "fv = -100")
+
+    def test_invalid_input(self):
+        inputs = argumentParser("invalid", "invalid = $-100")
+        self.assertEqual(inputs, "Invalid argument.")
 
 
 if __name__ == "__main__":

@@ -1,9 +1,9 @@
 import unittest
 from numpy_financial import npv, irr, fv, pv
 import pytest
-# import sys
-# from pathlib import Path
-# sys.path[0] = str(Path(sys.path[0]).parent)
+import sys
+from pathlib import Path
+sys.path[0] = str(Path(sys.path[0]).parent / "src")
 from evaluator import evaluate
 from finParser import parse
 
