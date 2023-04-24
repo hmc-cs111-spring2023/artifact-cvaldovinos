@@ -23,7 +23,6 @@ from evaluator import evaluate
 
 # This will output the "inputs" and the "function name" which the parser returns from the input string.
 
-# TODO: Throw errors for when the given statement is invalid.
 def main():
     while True:
         text = input('\nFinanceCalculator > ')
