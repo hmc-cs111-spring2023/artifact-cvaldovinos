@@ -57,7 +57,7 @@ I will describe 3 ways to access Finance Calculator:
 ### Method 1: Downloading repository
 1. On the repository, click the '<> Code' button and then select 'Download ZIP'
 
-<!-- Add colon to end of 1 and image here -->
+![code-and-zip](./images/1.1-code-and-zip.png)
 
 2. Navigate to where that file was downloaded. If your downloaded files automatically save in your 'Downloads' folder then you can do so by running the following command:
 ```
@@ -121,26 +121,24 @@ python main.py
 
 1. From the repository, verify that you are on the correct branch you would like to use (for the full application, use main) in the top left 
 
-<!-- Add colon to end of 1 and image here -->
+![main-branch](./images/3.1-main-branch.png)
 
 2. Click on the green button in the top right that reads "<> Code"
 
-<!-- Add colon to end of 2 and image here -->
+![code](./images/3.2-code.png)
 
 3. Select the Codespaces tab and on the first time accessing this you will see "Create codespaces on main". Click that button to start up a virtual environment.
 
-<!-- Add image of 'button' here -->
+![create-codespaces](./images/3.3-create-codespaces.png)
 
+4. You will be prompted with a screen reading "Setting up your codespace". This will take a few seconds to load and you do not have to do anything here besides wait.
 
-4. You will be prompted with a screen reading "Starting up your codespace". This will take a few seconds to load and you do not have to do anything here besides wait.
-
-<!-- Add image of 'Setting up codespace' here -->
+![set-up-codespaces](./images/3.4-setting-up-codespace.png)
 
 5. Now you should be prompted with a terminal at the bottom of the screen that looks something like this:
-<!-- Add colon to end of 5 and image here -->
 
-If the terminal is not there then you can go ahead and drag from the bottom of the screen or press CTRL+SHIFT+` to open it. 
-<!-- Make this like a caption to the image so it remains aligned with steps -->
+![terminal](./images/3.5-terminal.png)
+*If the terminal is not there then you can go ahead and drag from the bottom of the screen or press CTRL+SHIFT+` to open it.*
 
 6. Run the following command to install the numpy_financial library:
 ```
@@ -153,8 +151,6 @@ python main.py
 ``` 
 
 8. Now you'll get the prompt from the calculator to start typing! If you ever want to stop the program, you can type  ```exit``` or ```quit``` to stop it from running.
-
-<!-- Add image of 'FinanceCalculator> ' here -->
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
