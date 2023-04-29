@@ -44,7 +44,12 @@ def main():
 
         else:
             print("")
-            print(evaluate(functionName, inputs))
+            output = evaluate(functionName, inputs)
+            if output == "break":
+                print("Exiting FinanceCalculator...")
+                break
+            else:
+                print(output)
             print("")
 
 if __name__ == "__main__":

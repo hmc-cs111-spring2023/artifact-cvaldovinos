@@ -53,6 +53,7 @@ def evaluate(function, inputs):
         while(R == None):
             print("You did not provide a valid rate. Examples of valid rates: '0.08', '5%/12', 'r=7%'")
             R_INPUT = input("Please input the rate: ")
+            if R_INPUT == "exit" or R_INPUT == "quit": return "break"
             rateExpr = argumentParser("r", R_INPUT)
             match = re.match("r = (-?\d*.?\d*)", rateExpr)
             if match: R = float(match.groups()[0])
@@ -61,6 +62,7 @@ def evaluate(function, inputs):
         while(len(CF) == 0):
             print("You did not provide a valid set of cash flows. Examples of valid cash flows: '[-100,200,300]', 'cash flows of [-1500, 100,200]', 'cash flows = [120,-100,45]'")
             CF_INPUT = input("Please input the cash flows: ")
+            if CF_INPUT == "exit" or CF_INPUT == "quit": return "break"
             cfExpr = argumentParser("cash_flows", CF_INPUT)
             match = re.match("cash_flows = (\[\s?-?\d*\.?\d+(?:,\s*-?\d*\.?\d+)*\s?\])", cfExpr)
             if match: CF = np.fromstring(match.groups()[0].strip(']['), dtype=float, sep=',')
@@ -87,6 +89,7 @@ def evaluate(function, inputs):
         while(len(CF) == 0):
             print("You did not provide a valid set of cash flows. Examples of valid cash flows: '[-100,200,300]', 'cash flows of [-1500, 100,200]', 'cash flows = [120,-100,45]'")
             CF_INPUT = input("Please input the cash flows: ")
+            if CF_INPUT == "exit" or CF_INPUT == "quit": return "break"
             cfExpr = argumentParser("cash_flows", CF_INPUT)
             match = re.match("cash_flows = (\[\s?-?\d*\.?\d+(?:,\s*-?\d*\.?\d+)*\s?\])", cfExpr)
             if match: CF = np.fromstring(match.groups()[0].strip(']['), dtype=float, sep=',')
@@ -116,6 +119,7 @@ def evaluate(function, inputs):
         while(R == None):
             print("You did not provide a valid rate. Examples of valid rates: '0.08', '5%/12', 'r=7%'")
             R_INPUT = input("Please input the rate: ")
+            if R_INPUT == "exit" or R_INPUT == "quit": return "break"
             rateExpr = argumentParser("r", R_INPUT)
             match = re.match("r = (-?\d*.?\d*)", rateExpr)
             if match: R = float(match.groups()[0])
@@ -124,6 +128,7 @@ def evaluate(function, inputs):
         while(NPER == None):
             print("You did not provide a valid number of periods. Examples of valid npers: '5*12', '100 periods', 'nper=24'")
             NPER_INPUT = input("Please input the number of periods: ")
+            if NPER_INPUT == "exit" or NPER_INPUT == "quit": return "break"
             nperExpr = argumentParser("nper", NPER_INPUT)
             match = re.match("nper = (\d*.?\d*)", nperExpr)
             if match: NPER = float(match6.groups()[0])
@@ -132,6 +137,7 @@ def evaluate(function, inputs):
         while(PMT == None):
             print("You did not provide a valid payment value. Examples of valid payments: '$100 payments', 'pmt = -150' (NOTE: payments in the first format are assumed to be negative values such that $100 payments is equivalent to pmt = -100.)")
             PMT_INPUT = input("Please input the payment value: ")
+            if PMT_INPUT == "exit" or PMT_INPUT == "quit": return "break"
             pmtExpr = argumentParser("pmt", PMT_INPUT)
             match = re.match("pmt = (-?\d*.?\d*)", pmtExpr)
             if match: PMT = float(match.groups()[0])
@@ -140,6 +146,7 @@ def evaluate(function, inputs):
         while(PV == None):
             print("You did not provide a valid present value. Examples of valid present values: '1000', 'pv = -300'")
             PV_INPUT = input("Please input the present value: ")
+            if PV_INPUT == "exit" or PV_INPUT == "quit": return "break"
             pvExpr = argumentParser("pv", PV_INPUT)
             match = re.match("pv = (-?\d*.?\d*)", pvExpr)
             if match: PV = float(match.groups()[0])
@@ -161,6 +168,7 @@ def evaluate(function, inputs):
         while(R == None):
             print("You did not provide a valid rate. Examples of valid rates: '0.08', '5%/12', 'r=7%'")
             R_INPUT = input("Please input the rate: ")
+            if R_INPUT == "exit" or R_INPUT == "quit": return "break"
             rateExpr = argumentParser("r", R_INPUT)
             match = re.match("r = (-?\d*.?\d*)", rateExpr)
             if match: R = float(match.groups()[0])
@@ -169,6 +177,7 @@ def evaluate(function, inputs):
         while(NPER == None):
             print("You did not provide a valid number of periods. Examples of valid npers: '5*12', '100 periods', 'nper=24'")
             NPER_INPUT = input("Please input the number of periods: ")
+            if NPER_INPUT == "exit" or NPER_INPUT == "quit": return "break"
             nperExpr = argumentParser("nper", NPER_INPUT)
             match = re.match("nper = (\d*.?\d*)", nperExpr)
             if match: NPER = float(match6.groups()[0])
@@ -177,6 +186,7 @@ def evaluate(function, inputs):
         while(PMT == None):
             print("You did not provide a valid payment value. Examples of valid payments: '$100 payments', 'pmt = -150' (NOTE: payments in the first format are assumed to be negative values such that $100 payments is equivalent to pmt = -100.)")
             PMT_INPUT = input("Please input the payment value: ")
+            if PMT_INPUT == "exit" or PMT_INPUT == "quit": return "break"
             pmtExpr = argumentParser("pmt", PMT_INPUT)
             match = re.match("pmt = (-?\d*.?\d*)", pmtExpr)
             if match: PMT = float(match.groups()[0])
