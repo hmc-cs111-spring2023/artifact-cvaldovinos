@@ -178,6 +178,8 @@ Where A is one of the following (case insensitive):
 * Present Value / PV
 * Future Value / FV
 
+And where W, X, Y, and Z are the inputs for those functions.
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Sample Uses
