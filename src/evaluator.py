@@ -141,6 +141,14 @@ def evaluate(function, inputs):
             if match: PMT = float(match.groups()[0])
             else: continue
 
+        while(PV == None):
+            print("You did not provide a valid present value.") # TODO: Add something about what a valid input looks like here
+            PV_INPUT = input("Please input the present value: ")
+            pvExpr = argumentParser("pv", PV_INPUT)
+            match = re.match("pv = (-?\d*.?\d*)", pvExpr)
+            if match: PV = float(match.groups()[0])
+            else: continue
+
         if FV != None:
             tooManyArgs = True
             print("You provided a future value but FV does not use future value so that argument was ignored.")
@@ -150,8 +158,6 @@ def evaluate(function, inputs):
         if tooManyArgs:
             print("FV only needs 3 arguments: rate, number of periods, and payment value. OPTIONALLY you can add a present value \n\n")
 
-        if PV == None:
-            return npf.fv(R, NPER, PMT)
         else:
             return npf.fv(R, NPER, PMT, PV)
     

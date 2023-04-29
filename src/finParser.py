@@ -34,10 +34,10 @@ def argumentParser(argument, input):
         matchesRateExpr1 = re.match("a?\s?rate of (\d*.?\d*\%?)(\/\d*|\*\d*)?", string)
         if matchesRateExpr1: return inputFormatter(matchesRateExpr1, "r")
         
-        matchesRateExpr2 = re.match("a?\s?rate = (\d*.?\d*\%?)(\/\d*|\*\d*)?", string)
+        matchesRateExpr2 = re.match("a?\s?rate\s?=\s?(\d*.?\d*\%?)(\/\d*|\*\d*)?", string)
         if matchesRateExpr2: return inputFormatter(matchesRateExpr2, "r")
             
-        matchesRateExpr3 = re.match("a?\s?r = (\d*.?\d*\%?)(\/\d*|\*\d*)?", string)
+        matchesRateExpr3 = re.match("a?\s?r\s?=\s?(\d*.?\d*\%?)(\/\d*|\*\d*)?", string)
         if matchesRateExpr3: return inputFormatter(matchesRateExpr3, "r")
 
         matchesRateExpr4 = re.match("(\d*.?\d*\%?)(\/\d*|\*\d*)?", string)
@@ -47,10 +47,10 @@ def argumentParser(argument, input):
         matchesCFExpr1 = re.match("cash flows of (\[\s?-?\d*\.?\d+(?:,\s?-?\d*\.?\d+)*\s?\])", string)
         if matchesCFExpr1: return "cash_flows = " + matchesCFExpr1.group(1)
 
-        matchesCFExpr2 = re.match("cash flows = (\[\s?-?\d*\.?\d+(?:,\s?-?\d*\.?\d+)*\s?\])", string)
+        matchesCFExpr2 = re.match("cash flows\s?=\s?(\[\s?-?\d*\.?\d+(?:,\s?-?\d*\.?\d+)*\s?\])", string)
         if matchesCFExpr2: return "cash_flows = " + matchesCFExpr2.group(1)
 
-        matchesCFExpr3 = re.match("cash_flows = (\[\s?-?\d*\.?\d+(?:,\s?-?\d*\.?\d+)*\s?\])", string)
+        matchesCFExpr3 = re.match("cash_flows\s?=\s?(\[\s?-?\d*\.?\d+(?:,\s?-?\d*\.?\d+)*\s?\])", string)
         if matchesCFExpr3: return "cash_flows = " + matchesCFExpr3.group(1)
 
         matchesCFExpr4 = re.match("(\[\s?-?\d*\.?\d+(?:,\s?-?\d*\.?\d+)*\s?\])", string)
@@ -60,7 +60,7 @@ def argumentParser(argument, input):
         matchesNperExpr1 = re.match("(\d*)(\*\d*)? periods", string)
         if matchesNperExpr1: return inputFormatter(matchesNperExpr1, "nper")
 
-        matchesNperExpr2 = re.match("nper = (\d*)(\*\d*)?", string)
+        matchesNperExpr2 = re.match("nper\s?=\s?(\d*)(\*\d*)?", string)
         if matchesNperExpr2: return inputFormatter(matchesNperExpr2, "nper")
 
         matchesNperExpr3 = re.match("nper of (\d*)(\*\d*)?", string)
@@ -76,7 +76,7 @@ def argumentParser(argument, input):
         matchesPmtExpr2 = re.match("\$(\d*\.?\d+) payments", input)
         if matchesPmtExpr2: return "pmt = -" + matchesPmtExpr2.group(1)
 
-        matchesPmtExpr3 = re.match("pmt = \$?(-?\d*\.?\d+)", input)
+        matchesPmtExpr3 = re.match("pmt\s?=\s?\$?(-?\d*\.?\d+)", input)
         if matchesPmtExpr3: return "pmt = " + matchesPmtExpr3.group(1)
 
         matchesPmtExpr4 = re.match("pmt of \$?(-?\d*\.?\d+)", input)
@@ -89,7 +89,7 @@ def argumentParser(argument, input):
         matchesPVExpr1 = re.match("a?\s?present value of (-?\d*\.?\d+)", string)
         if matchesPVExpr1: return "pv = " + matchesPVExpr1.group(1)
 
-        matchesPVExpr2 = re.match("a?\s?pv = (-?\d*\.?\d+)", string)
+        matchesPVExpr2 = re.match("a?\s?pv\s?=\s?(-?\d*\.?\d+)", string)
         if matchesPVExpr2: return "pv = " + matchesPVExpr2.group(1)
 
         matchesPVExpr3 = re.match("a?\s?pv of (-?\d*\.?\d+)", string)
@@ -102,7 +102,7 @@ def argumentParser(argument, input):
         matchesFVExpr1 = re.match("a?\s?future value of (-?\d*\.?\d+)", string)
         if matchesFVExpr1: return "fv = " + matchesFVExpr1.group(1)
 
-        matchesFVExpr2 = re.match("a?\s?fv = (-?\d*\.?\d+)", string)
+        matchesFVExpr2 = re.match("a?\s?fv\s?=\s?(-?\d*\.?\d+)", string)
         if matchesFVExpr2: return "fv = " + matchesFVExpr2.group(1)
 
         matchesFVExpr3 = re.match("a?\s?fv of (-?\d*\.?\d+)", string)
@@ -120,16 +120,16 @@ def operationParser(input):
     matchesRateExpr1 = re.match("a?\s?rate of (\d*.?\d*\%?)(\/\d*|\*\d*)?", string)
     if matchesRateExpr1: return inputFormatter(matchesRateExpr1, "r")
 
-    matchesRateExpr2 = re.match("a?\s?rate = (\d*.?\d*\%?)(\/\d*|\*\d*)?", string)
+    matchesRateExpr2 = re.match("a?\s?rate\s?=\s?(\d*.?\d*\%?)(\/\d*|\*\d*)?", string)
     if matchesRateExpr2: return inputFormatter(matchesRateExpr2, "r")
         
-    matchesRateExpr3 = re.match("a?\s?r = (\d*.?\d*\%?)(\/\d*|\*\d*)?", string)
+    matchesRateExpr3 = re.match("a?\s?r\s?=\s?(\d*.?\d*\%?)(\/\d*|\*\d*)?", string)
     if matchesRateExpr3: return inputFormatter(matchesRateExpr3, "r")
 
     matchesNperExpr1 = re.match("(\d*)(\*\d*)? periods", string)
     if matchesNperExpr1: return inputFormatter(matchesNperExpr1, "nper")
 
-    matchesNperExpr2 = re.match("nper = (\d*)(\*\d*)?", string)
+    matchesNperExpr2 = re.match("nper\s?=\s?(\d*)(\*\d*)?", string)
     if matchesNperExpr2: return inputFormatter(matchesNperExpr2, "nper")
 
     matchesNperExpr3 = re.match("nper of (\d*)(\*\d*)?", string)
@@ -142,7 +142,7 @@ def operationParser(input):
     matchesPmtExpr2 = re.match("\$(\d*\.?\d+) payments", input)
     if matchesPmtExpr2: return "pmt = -" + matchesPmtExpr2.group(1)
 
-    matchesPmtExpr3 = re.match("pmt = (-?\d*\.?\d+)", string)
+    matchesPmtExpr3 = re.match("pmt\s?=\s?(-?\d*\.?\d+)", string)
     if matchesPmtExpr3: return inputFormatter(matchesPmtExpr3, "pmt")
 
     matchesPmtExpr4 = re.match("pmt of (-?\d*\.?\d+)", string)
@@ -151,7 +151,7 @@ def operationParser(input):
     matchesPvExpr1 = re.match("a?\s?present value of (-?\d*\.?\d+)", string)
     if matchesPvExpr1: return inputFormatter(matchesPvExpr1, "pv")
 
-    matchesPvExpr2 = re.match("a?\s?pv = (-?\d*\.?\d+)", string)
+    matchesPvExpr2 = re.match("a?\s?pv\s?=\s?(-?\d*\.?\d+)", string)
     if matchesPvExpr2: return inputFormatter(matchesPvExpr2, "pv")
 
     matchesPvExpr3 = re.match("a?\s?pv of (-?\d*\.?\d+)", string)
@@ -160,7 +160,7 @@ def operationParser(input):
     matchesFvExpr1 = re.match("a?\s?future value of (-?\d*\.?\d+)", string)
     if matchesFvExpr1: return inputFormatter(matchesFvExpr1, "fv")
 
-    matchesFvExpr2 = re.match("a?\s?fv = (-?\d*\.?\d+)", string)
+    matchesFvExpr2 = re.match("a?\s?fv\s?=\s?(-?\d*\.?\d+)", string)
     if matchesFvExpr2: return inputFormatter(matchesFvExpr2, "fv")
 
     matchesFvExpr3 = re.match("a?\s?fv of (-?\d*\.?\d+)", string)
@@ -169,7 +169,7 @@ def operationParser(input):
     matchesCfExpr1 = re.match("cash flows of (\[\s*-?\d*\.?\d+(?:,\s*-?\d*\.?\d+)*\s*\])", string)
     if matchesCfExpr1: return "cash_flows = " + matchesCfExpr1.group(1)
 
-    matchesCfExpr2 = re.match("cash flows = (\[\s*-?\d*\.?\d+(?:,\s*-?\d*\.?\d+)*\s*\])", string)
+    matchesCfExpr2 = re.match("cash flows\s?=\s?(\[\s*-?\d*\.?\d+(?:,\s*-?\d*\.?\d+)*\s*\])", string)
     if matchesCfExpr2: return "cash_flows = " + matchesCfExpr2.group(1)
 
     else: 

@@ -193,7 +193,7 @@ A company is considering investing $500,000 in a project that will generate cash
 ### Input:
     Given r = 0.08 and cash flows = [-500000, 100000, 100000, 100000, 100000, 100000, 100000]. What is the NPV?
 
-### Ouput:
+### Output:
 ```-37712.033603881086```
 
 ### Sample Problem 2:
@@ -202,7 +202,7 @@ A manufacturing company is considering a new production line that will cost $2 m
 ### Input:
     Given cash flows = [-2000000, 500000, 500000, 500000, 500000, 500000, 500000, 500000]. What is the IRR?
 
-### Ouput:
+### Output:
 ```0.16326709023510078```
 
 ### Sample Problem 3:
@@ -212,18 +212,18 @@ You are planning to buy a car that costs $25,000. You can afford monthly payment
 ### Input:
     Given r = 4%/12, 12*5 periods, and $500 payments. What is the PV?
 
-### Ouput:
+### Output:
 ```27149.53445061747```
 
 ### Sample Problem 4:
 
-You are planning to retire in 20 years and you want to have $1,000,000 saved by then. If you can earn an annual interest rate of 5%, how much money do you need to invest today to reach your goal?
+You are planning to save $200 per month for the next 5 years in an account with an annual interest rate of 6%. How much money will you have in the account at the end of 5 years?
 
 ### Input:
-    Given r = 5%, 20 periods, $0 payments, and a future value of $1000000. What is the PV?
+    Given r = 6%/12, 5*12 periods, $200 payments, and a present value of 0. What is the FV?
 
-### Ouput:
-```-376889.48287300044```
+### Output:
+```13954.0061019723```
 
 
 <!-- DESIGN -->
