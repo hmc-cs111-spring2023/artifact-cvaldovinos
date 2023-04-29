@@ -34,15 +34,12 @@ def main():
         inputs, functionName = parse(text)
 
         invalidInput = (inputs == None or functionName == None)
-        if invalidInput: continue
-        
-        elif "ERROR: Invalid input." in inputs:
-            print("\nERROR: Invalid input name found.\n\nAllowed inputs include rate, nper, pmt, pv, fv, and cash flows.")
+        if invalidInput: continue  
 
         elif functionName == "Invalid Function Name":
             print("\nERROR: No valid function name found.\n\nAllowed function names include: NPV, FV, IRR, and PV.\n")
 
-        else:
+        elif "ERROR: Invalid input." not in inputs:
             print("")
             output = evaluate(functionName, inputs)
             if output == "break":

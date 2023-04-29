@@ -173,6 +173,7 @@ def operationParser(input):
     if matchesCfExpr2: return "cash_flows = " + matchesCfExpr2.group(1)
 
     else: 
+        print("\nERROR: Invalid input found: " + string + "\n\nAllowed inputs include rate, nper, pmt, pv, fv, and cash flows.")
         return "ERROR: Invalid input."
 
 def functionParser(string):
